@@ -1,0 +1,226 @@
+swagger: "2.0"
+info:
+  description: "This is compute poc"
+  version: "1.0.0"
+  title: "Computation Lab"
+  contact:
+    email: "yshthdn@gmail.com"
+host: "0.0.0.0:5000"
+basePath: "/v1"
+tags:
+- name: "Computation modelling"
+  description: "APIs to extrapolate ML data"
+
+schemes:
+- "https"
+- "http"
+paths:
+  /compute_forecast:
+    post:
+      operationId: compute.create
+      tags:
+        - "Computation modelling"
+      summary: "Create a new Job Configuration"
+      description: "Create a new Job Configuration"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "New Job configuration to be persisted"
+        required: true
+        schema:
+          $ref: "#/definitions/Config"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ComputeForecastResponse"
+
+    get:
+      operationId: compute.read_all
+      tags:
+        - "Computation modelling"
+      summary: Read the entire list of configs
+      description: Read the list of configs
+#      parameters:
+#        - name: length
+#          in: query
+#          type: integer
+#          description: Number of people to get from people
+#          required: false
+#        - name: offset
+#          in: query
+#          type: integer
+#          description: Offset from beginning of list where to start gathering people
+#          required: false
+      responses:
+        200:
+          description: Successfully read people list operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Config"
+    put:
+      operationId: compute.update
+      tags:
+        - "Computation modelling"
+      summary: "Update existing Job Configuration"
+      description: "Update existing Job Configuration"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Config object that needs to be updated"
+          required: true
+          schema:
+            $ref: "#/definitions/Config"
+      responses:
+        200:
+          description: "successful operation"
+
+##          schema:
+##            $ref: "#/definitions/ComputeForecastResponse"
+  /compute_forecast/{job_id}:
+    delete:
+      operationId: compute.delete
+      tags:
+        - "Computation modelling"
+      summary: Delete a config from the config list
+      description: Delete a config
+      parameters:
+        - name: job_id
+          in: path
+          type: string
+          required: True
+      responses:
+        200:
+          description: Successfully deleted a config from config list
+
+    get:
+      operationId: compute.read_one
+      tags:
+        - "Computation modelling"
+      summary: Read the oneof the config in list of configs
+      description: Read the oneof the config in list of configs
+      parameters:
+        - name: job_id
+          in: path
+          type: string
+          required: True
+
+      responses:
+        200:
+          description: Successfully read the config
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Config"
+
+  /compute_forecast/predict/{job_id}:
+    get:
+      operationId: compute.predict
+      tags:
+        - "Computation modelling"
+      summary: "Retrieve forecast of a Job"
+      description: "Retrieve forecast of a Job"
+      parameters:
+        - name: job_id
+          in: path
+          type: string
+          required: True
+      responses:
+        200:
+          description: Successfully retrieved the forecast!
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/ComputeForecastResponse"
+
+definitions:
+  Config:
+    type: "object"
+    properties:
+      job_id:
+        type: "integer"
+        format: "int64"
+      model_id:
+        type: "string"
+      mem_request:
+        type: "string"
+      cpu_request:
+        type: "string"
+      time_request:
+        type: "string"
+        format: "date"
+      project_id:
+        type: "string"
+      project_desc:
+        type: "string"
+      project_phase:
+        type: "string"
+      design_block_id:
+        type: "string"
+      design_block_desc:
+        type: "string"
+      tool_used:
+        type: "string"
+      tool_cmd:
+        type: "string"
+
+
+  ComputeForecastResponse:
+    type: "object"
+    properties:
+      job_id:
+        type: "integer"
+        format: "int64"
+      mem_request:
+        type: "string"
+      cpu_request:
+        type: "string"
+      time_request:
+        type: "string"
+      project_id:
+        type: "string"
+      project_desc:
+        type: "string"
+      project_phase:
+        type: "string"
+      design_block_id:
+        type: "string"
+      design_block_desc:
+        type: "string"
+      tool_used:
+        type: "string"
+      tool_cmd:
+        type: "string"
+      predictions:
+        type: "array"
+        items:
+          $ref: "#/definitions/Prediction"
+
+  Prediction:
+    type: "object"
+    properties:
+      mem_predicted:
+        type: "string"
+      cpu_predicted:
+        type: "string"
+      time_predicted:
+        type: "string"
+      confidence_level:
+        type: "string"
+        enum:
+        - "LOW"
+        - "MEDIUM"
+        - "HIGH"
+
+
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"
