@@ -13,14 +13,14 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="banner">People Demo Application</h1>
+        <h1 class="banner">Compute Jobs</h1>
         <div class="section editor">
-            <label for="fname">First Name
-                <input id="fname" type="text" />
+            <label for="job_id">Job ID
+                <input id="job_id" type="text" />
             </label>
             <br />
-            <label for="lname">Last Name
-                <input id="lname" type="text" />
+            <label for="pid">Project ID
+                <input id="pid" type="text" />
             </label>
             <br />
             <button id="create">Create</button>
@@ -28,14 +28,22 @@
             <button id="delete">Delete</button>
             <button id="reset">Reset</button>
         </div>
-        <div class="people">
+        <div class="job">
             <table>
-                <caption>People</caption>
+                <caption>Job</caption>
                 <thead>
                     <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Update Time</th>
+                        <th>Job ID</th>
+                        <th>Model ID</th>
+                        <th>CPU Request</th>
+                        <th>Memory Request</th>
+                        <th>Time Request</th>
+                        <th>Tool CMD</th>
+                        <th>Tool Used</th>
+                        <th>Design Block Desc</th>
+                        <th>Project Desc</th>
+                        <th>Project Phase</th>
+
                     </tr>
                 </thead>
                 <tbody>
